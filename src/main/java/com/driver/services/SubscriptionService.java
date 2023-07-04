@@ -33,10 +33,10 @@ public class SubscriptionService {
         User user=userRepository.findById(subscriptionEntryDto.getUserId()).get();
         subscription.setUser(user);
         int amount=0;
-        if(subscription.getSubscriptionType().toString().toUpperCase().equals("BASIC")){
+        if(subscription.getSubscriptionType().equals(SubscriptionType.ELITE)){
             amount += 500 + 200*subscription.getNoOfScreensSubscribed();
         }
-        else if(subscription.getSubscriptionType().toString().toUpperCase().equals("PRO")){
+        else if(subscription.getSubscriptionType().equals(SubscriptionType.PRO)){
             amount += 800 + 250*subscription.getNoOfScreensSubscribed();
         }
         else{
@@ -61,10 +61,10 @@ public class SubscriptionService {
         Subscription subscription=user.getSubscription();
         int updatedAmount=0;
         int diff=0;
-        if (subscription.getSubscriptionType().toString().toUpperCase().equals("ELITE")){
+        if (subscription.getSubscriptionType().equals(SubscriptionType.ELITE)){
             throw new Exception("Already the best Subscription");
         }
-        else if(subscription.getSubscriptionType().toString().toUpperCase().equals("PRO")){
+        else if(subscription.getSubscriptionType().equals(SubscriptionType.PRO)){
             updatedAmount = 1000 + 350*subscription.getNoOfScreensSubscribed();
             diff=updatedAmount-subscription.getTotalAmountPaid();
 

@@ -31,6 +31,7 @@ public class WebSeriesService {
         ProductionHouse productionHouse=productionHouseRepository.
                 findById(webSeriesEntryDto.getProductionHouseId()).get();
         double ratingSum=0;
+        webSeries=webSeriesRepository.save(webSeries);
         for(WebSeries webSeries1 : productionHouse.getWebSeriesList()){
             if(webSeries1.getId() == webSeries.getId()){
                 throw new Exception("Series is already present");
