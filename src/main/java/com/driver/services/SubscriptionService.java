@@ -2,7 +2,6 @@ package com.driver.services;
 
 
 import com.driver.EntryDto.SubscriptionEntryDto;
-import com.driver.Transformer.SubscriptionTransformer;
 import com.driver.model.Subscription;
 import com.driver.model.SubscriptionType;
 import com.driver.model.User;
@@ -23,13 +22,10 @@ public class SubscriptionService {
 
     @Autowired
     UserRepository userRepository;
-//    @Autowired
-//    SubscriptionTransformer subscriptionTransformer;
 
     public Integer buySubscription(SubscriptionEntryDto subscriptionEntryDto){
 
         //Save The subscription Object into the Db and return the total Amount that user has to pay
-//        Subscription subscription=subscriptionTransformer.subscriptionDtoToEntity(subscriptionEntryDto);
 
         SubscriptionType subscriptionType=subscriptionEntryDto.getSubscriptionType();
         int numberOfScreen=subscriptionEntryDto.getNoOfScreensRequired();

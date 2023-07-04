@@ -28,7 +28,6 @@ public class WebSeriesService {
         //use function written in Repository Layer for the same
         //Dont forget to save the production and webseries Repo
 
-//        WebSeries webSeries=webSeriesTransformer.WebSeriesDtoToEntity(webSeriesEntryDto);
         String name=webSeriesEntryDto.getSeriesName();
         int age=webSeriesEntryDto.getAgeLimit();
         double rating=webSeriesEntryDto.getRating();
@@ -36,28 +35,22 @@ public class WebSeriesService {
 
         WebSeries webSeries=new WebSeries(name,age,rating,subscriptionType);
 
-        ProductionHouse productionHouse=productionHouseRepository.
-                findById(webSeriesEntryDto.getProductionHouseId()).get();
-
-        double ratingSum=0;
-
-        if(webSeriesRepository.findBySeriesName(webSeries.getSeriesName()) != null){
+        if(webSeriesRepository.findBySeriesName(webSeriesEntryDto.getSeriesName()) != null){
             throw new Exception("Series is already present");
         }
 
-        webSeries=webSeriesRepository.save(webSeries);
+        ProductionHouse productionHouse=productionHouseRepository.
+                findById(webSeriesEntryDto.getProductionHouseId()).get();
 
-        for(WebSeries webSeries1 : productionHouse.getWebSeriesList()){
-            ratingSum+=webSeries1.getRating();
-        }
+        double ratingSum=productionHouse.getRatings();
+        ratingSum = ratingSum + (webSeries.getRating() - ratingSum)/productionHouse.getWebSeriesList().size();
 
+        productionHouse.setRatings(ratingSum);
         webSeries.setProductionHouse(productionHouse);
         productionHouse.getWebSeriesList().add(webSeries);
 
-        ratingSum += webSeries.getRating();
-        ratingSum /= productionHouse.getWebSeriesList().size();
-        productionHouse.setRatings(ratingSum);
         productionHouseRepository.save(productionHouse);
-        return webSeries.getId();
+        WebSeries webSeries1=webSeriesRepository.save(webSeries);
+        return webSeries1.getId();
     }
 }
