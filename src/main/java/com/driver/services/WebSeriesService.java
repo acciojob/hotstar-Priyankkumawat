@@ -1,7 +1,6 @@
 package com.driver.services;
 
 import com.driver.EntryDto.WebSeriesEntryDto;
-import com.driver.Transformer.WebSeriesTransformer;
 import com.driver.model.ProductionHouse;
 import com.driver.model.SubscriptionType;
 import com.driver.model.WebSeries;
@@ -18,8 +17,6 @@ public class WebSeriesService {
 
     @Autowired
     ProductionHouseRepository productionHouseRepository;
-//    @Autowired
-//    WebSeriesTransformer webSeriesTransformer;
 
     public Integer addWebSeries(WebSeriesEntryDto webSeriesEntryDto)throws  Exception{
 
