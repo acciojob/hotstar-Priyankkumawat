@@ -16,8 +16,8 @@ public class ProductionHouseService {
     ProductionTransformer productionTransformer;
     public Integer addProductionHouseToDb(ProductionHouseEntryDto productionHouseEntryDto){
         ProductionHouse productionHouse= productionTransformer.productionHouseDtoToEntity(productionHouseEntryDto);
-        productionHouseRepository.save(productionHouse);
         productionHouse.setRatings(0);
+        productionHouse=productionHouseRepository.save(productionHouse);
         return  productionHouse.getId();
     }
 }
