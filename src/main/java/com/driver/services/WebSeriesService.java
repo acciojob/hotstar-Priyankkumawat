@@ -30,16 +30,22 @@ public class WebSeriesService {
         WebSeries webSeries=webSeriesTransformer.WebSeriesDtoToEntity(webSeriesEntryDto);
         ProductionHouse productionHouse=productionHouseRepository.
                 findById(webSeriesEntryDto.getProductionHouseId()).get();
+
         double ratingSum=0;
+
+        if(webSeriesRepository.findBySeriesName(webSeries.getSeriesName()) != null){
+            throw new Exception("Series is already present");
+        }
+
         webSeries=webSeriesRepository.save(webSeries);
+
         for(WebSeries webSeries1 : productionHouse.getWebSeriesList()){
-            if(webSeries1.getId() == webSeries.getId()){
-                throw new Exception("Series is already present");
-            }
             ratingSum+=webSeries1.getRating();
         }
-        productionHouse.getWebSeriesList().add(webSeries);
+
         webSeries.setProductionHouse(productionHouse);
+        productionHouse.getWebSeriesList().add(webSeries);
+
         ratingSum += webSeries.getRating();
         ratingSum /= productionHouse.getWebSeriesList().size();
         productionHouse.setRatings(ratingSum);
