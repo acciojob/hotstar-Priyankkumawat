@@ -3,6 +3,7 @@ package com.driver.services;
 import com.driver.EntryDto.WebSeriesEntryDto;
 import com.driver.Transformer.WebSeriesTransformer;
 import com.driver.model.ProductionHouse;
+import com.driver.model.SubscriptionType;
 import com.driver.model.WebSeries;
 import com.driver.repository.ProductionHouseRepository;
 import com.driver.repository.WebSeriesRepository;
@@ -17,8 +18,8 @@ public class WebSeriesService {
 
     @Autowired
     ProductionHouseRepository productionHouseRepository;
-    @Autowired
-    WebSeriesTransformer webSeriesTransformer;
+//    @Autowired
+//    WebSeriesTransformer webSeriesTransformer;
 
     public Integer addWebSeries(WebSeriesEntryDto webSeriesEntryDto)throws  Exception{
 
@@ -27,7 +28,14 @@ public class WebSeriesService {
         //use function written in Repository Layer for the same
         //Dont forget to save the production and webseries Repo
 
-        WebSeries webSeries=webSeriesTransformer.WebSeriesDtoToEntity(webSeriesEntryDto);
+//        WebSeries webSeries=webSeriesTransformer.WebSeriesDtoToEntity(webSeriesEntryDto);
+        String name=webSeriesEntryDto.getSeriesName();
+        int age=webSeriesEntryDto.getAgeLimit();
+        double rating=webSeriesEntryDto.getRating();
+        SubscriptionType subscriptionType=webSeriesEntryDto.getSubscriptionType();
+
+        WebSeries webSeries=new WebSeries(name,age,rating,subscriptionType);
+
         ProductionHouse productionHouse=productionHouseRepository.
                 findById(webSeriesEntryDto.getProductionHouseId()).get();
 
@@ -52,5 +60,4 @@ public class WebSeriesService {
         productionHouseRepository.save(productionHouse);
         return webSeries.getId();
     }
-
 }

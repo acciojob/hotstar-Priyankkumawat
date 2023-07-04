@@ -23,13 +23,21 @@ public class SubscriptionService {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    SubscriptionTransformer subscriptionTransformer;
+//    @Autowired
+//    SubscriptionTransformer subscriptionTransformer;
 
     public Integer buySubscription(SubscriptionEntryDto subscriptionEntryDto){
 
         //Save The subscription Object into the Db and return the total Amount that user has to pay
-        Subscription subscription=subscriptionTransformer.subscriptionDtoToEntity(subscriptionEntryDto);
+//        Subscription subscription=subscriptionTransformer.subscriptionDtoToEntity(subscriptionEntryDto);
+
+        SubscriptionType subscriptionType=subscriptionEntryDto.getSubscriptionType();
+        int numberOfScreen=subscriptionEntryDto.getNoOfScreensRequired();
+
+        Subscription subscription=new Subscription();
+        subscription.setSubscriptionType(subscriptionType);
+        subscription.setNoOfScreensSubscribed(numberOfScreen);
+
         User user=userRepository.findById(subscriptionEntryDto.getUserId()).get();
         subscription.setUser(user);
         int amount=0;
