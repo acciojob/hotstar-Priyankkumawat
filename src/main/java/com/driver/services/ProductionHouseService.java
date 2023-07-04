@@ -15,9 +15,10 @@ public class ProductionHouseService {
     @Autowired
     ProductionTransformer productionTransformer;
     public Integer addProductionHouseToDb(ProductionHouseEntryDto productionHouseEntryDto){
-        ProductionHouse productionHouse= productionTransformer.productionHouseDtoToEntity(productionHouseEntryDto);
-        productionHouse.setRatings(0);
-        productionHouse=productionHouseRepository.save(productionHouse);
-        return  productionHouse.getId();
+//        ProductionHouse productionHouse= productionTransformer.productionHouseDtoToEntity(productionHouseEntryDto);
+        ProductionHouse productionHouse=new ProductionHouse(productionHouseEntryDto.getName());
+        productionHouse.setRatings(0.0);
+        ProductionHouse addedProductionHouse=productionHouseRepository.save(productionHouse);
+        return  addedProductionHouse.getId();
     }
 }
