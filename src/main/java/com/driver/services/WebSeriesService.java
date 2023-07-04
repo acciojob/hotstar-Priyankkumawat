@@ -26,12 +26,13 @@ public class WebSeriesService {
         //Incase the seriesName is already present in the Db throw Exception("Series is already present")
         //use function written in Repository Layer for the same
         //Dont forget to save the production and webseries Repo
+
         WebSeries webSeries=webSeriesTransformer.WebSeriesDtoToEntity(webSeriesEntryDto);
         ProductionHouse productionHouse=productionHouseRepository.
                 findById(webSeriesEntryDto.getProductionHouseId()).get();
         double ratingSum=0;
         for(WebSeries webSeries1 : productionHouse.getWebSeriesList()){
-            if(webSeries1 == webSeries){
+            if(webSeries1.getId() == webSeries.getId()){
                 throw new Exception("Series is already present");
             }
             ratingSum+=webSeries1.getRating();
