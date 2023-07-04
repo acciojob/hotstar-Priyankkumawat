@@ -51,8 +51,8 @@ public class SubscriptionService {
             amount += 1000 + 350*subscription.getNoOfScreensSubscribed();
         }
 
-        Date date = new java.util.Date();
-        subscription.setStartSubscriptionDate(date);
+//        Date date = new java.util.Date();
+//        subscription.setStartSubscriptionDate(date);
         subscription.setTotalAmountPaid(amount);
 
         user.setSubscription(subscription);
